@@ -119,12 +119,12 @@ export default {
       }
       // Calculate the estimated total
       const total =
-        0.01 * extraRequests + store.getPlan(this.estimatedPlanId).rate;
+        49.00 * extraRequests + store.getPlan(this.estimatedPlanId).rate;
 
       // Format the number as currency
       const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'AUD',
       });
 
       return formatter.format(total);

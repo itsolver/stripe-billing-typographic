@@ -245,7 +245,7 @@ class Customer extends Model {
           subscription.stripeId,
           {
             billing: paymentMethod,
-            days_until_due: 30,
+            days_until_due: 7,
           }
         );
         const updatedBilling = await db(Subscription.table)

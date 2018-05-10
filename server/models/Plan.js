@@ -66,62 +66,62 @@ class Plan extends Model {
      * Each of our plans (Starter, Growth, and Enterprise) have both a monthly
      * fixed price (e.g. $10, $20, and $30) and a metered price based on the
      * number of requests. Each plan includes a number of free requests.
-     * Additional requests cost $0.01 each.
+     * Additional requests cost $49 each.
      *
      * To model this, we're creating two plans for each price point:
      *  - A monthly plan with the base price (e.g. $10)
      *  - A metered plan with two tiers using graduated pricing.
      *    e.g. the Starter plan's first tier is free up to 10,000 requests,
-     *    and the second tier costs $0.01 for each request.
+     *    and the second tier costs $49 for each request.
      *
      * Each customer will be subscribed to a pair of these plans. In total,
      * we'll have six plans.
      */
     let plans = [
       {
-        name: 'Starter',
-        nickname: 'starter',
+        name: 'Solo',
+        nickname: 'solo',
         type: 'monthly',
         stripeId: null,
-        amount: 1000,
+        amount: 4900,
       },
       {
-        name: 'Starter monthly requests',
-        nickname: 'starter_requests',
+        name: 'Solo monthly requests',
+        nickname: 'solo_requests',
         type: 'metered',
         stripeId: null,
-        amount: 1,
-        included: 10000,
+        amount: 4900,
+        included: 1,
       },
       {
-        name: 'Growth',
-        nickname: 'growth',
+        name: 'Business',
+        nickname: 'business',
         type: 'monthly',
         stripeId: null,
-        amount: 2000,
+        amount: 9900,
       },
       {
-        name: 'Growth monthly requests',
-        nickname: 'growth_requests',
+        name: 'Business monthly requests',
+        nickname: 'business_requests',
         type: 'metered',
         stripeId: null,
-        amount: 1,
-        included: 50000,
+        amount: 4900,
+        included: 3,
       },
       {
         name: 'Enterprise',
         nickname: 'enterprise',
         type: 'monthly',
         stripeId: null,
-        amount: 3000,
+        amount: 24900,
       },
       {
         name: 'Enterprise monthly requests',
         nickname: 'enterprise_requests',
         type: 'metered',
         stripeId: null,
-        amount: 1,
-        included: 150000,
+        amount: 4900,
+        included: 5,
       },
     ];
 
@@ -164,7 +164,7 @@ class Plan extends Model {
           createdPlan = await stripe.plans.create({
             interval: 'month',
             amount: plan.amount,
-            currency: 'usd',
+            currency: 'aud',
             nickname: plan.nickname,
             product: {
               name: plan.name,
@@ -174,14 +174,14 @@ class Plan extends Model {
           // Create a metered plan
           createdPlan = await stripe.plans.create({
             interval: 'month',
-            currency: 'usd',
+            currency: 'aud',
             nickname: plan.nickname,
             product: {
               name: plan.name,
             },
             usage_type: 'metered',
             // Two tiers: each plan features an included number of requests for
-            // free, extra requests are $0.01.
+            // free, extra requests are $49.
             billing_scheme: 'tiered',
             // We're using graduated pricing, which lets us bill a different
             // rate at each tier (and gradually increase the price for each
