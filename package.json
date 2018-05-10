@@ -6,7 +6,7 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stripe/stripe-billing-typographic.git"
+    "url": "https://github.com/itsolver/stripe-billing-typographic.git"
   },
   "license": "MIT",
   "engines": {
